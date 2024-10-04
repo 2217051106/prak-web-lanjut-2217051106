@@ -16,4 +16,10 @@ class Kelas extends Model
         
     }
 
+    protected $table = 'kelas';
+
+    public function getKelas(){
+        return $this->all();
+    }
+
 }
