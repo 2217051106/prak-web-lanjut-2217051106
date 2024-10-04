@@ -44,22 +44,22 @@ class UserController extends Controller{
         return redirect()->to('/user'); 
     }
 
-    // public function create(){
-    //     // $kelasModel = new Kelas();
+    public function create(){
+        // $kelasModel = new Kelas();
 
-    //     // $kelas = $kelasModel->getKelas();
+        // $kelas = $kelasModel->getKelas();
 
-    //     $kelas = $this->kelasModel->getKelas();
+        $kelas = $this->kelasModel->getKelas();
 
-    //     $data =[
-    //         'title' => 'Create User',
-    //         'kelas' =>$kelas,
-    //     ];
+        $data =[
+            'title' => 'Create User',
+            'kelas' =>$kelas,
+        ];
 
-    //     return view('create_user', $data);
+        return view('create_user', $data);
         
 
-    // }
+    }
     
 
     // public function store(Request $request){
