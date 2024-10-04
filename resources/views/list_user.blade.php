@@ -24,6 +24,7 @@
                     <td><?= $user['npm'] ?></td> 
                     <td><?= $user['nama_kelas'] ?></td> 
                     <td>
+                    <a href="#" class="btn btn-warning">View</a>
                     <a href="#" class="btn btn-primary">Edit</a>
                     <a href="#" class="btn btn-danger">Delete</a>
                     </td> 

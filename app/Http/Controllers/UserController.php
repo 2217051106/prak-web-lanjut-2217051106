@@ -17,6 +17,8 @@ class UserController extends Controller{
 {
     $this->userModel = new UserModel();
     $this->kelasModel = new Kelas();
+
+
 }
     public function index() 
     {  $users = $this->userModel->getUser();
@@ -24,6 +26,7 @@ class UserController extends Controller{
         $data = [ 
             'title' => 'List User',
             'users' => $users,  
+
         ]; 
     
         return view('list_user', $data); 
@@ -41,25 +44,25 @@ class UserController extends Controller{
 
         $this->userModel->saveUser($validatedData);
         
-        return redirect()->to('/user'); 
+        return redirect()->route('/user'); 
     }
 
-    // public function create(){
-    //     // $kelasModel = new Kelas();
+    public function create(){
+        // $kelasModel = new Kelas();
 
-    //     // $kelas = $kelasModel->getKelas();
+        // $kelas = $kelasModel->getKelas();
 
-    //     $kelas = $this->kelasModel->getKelas();
+        $kelas = $this->kelasModel->getKelas();
 
-    //     $data =[
-    //         'title' => 'Create User',
-    //         'kelas' =>$kelas,
-    //     ];
+        $data =[
+            'title' => 'Create User',
+            'kelas' =>$kelas,
+        ];
 
-    //     return view('create_user', $data);
+        return view('create_user', $data);
         
 
-    // }
+    }
     
 
     // public function store(Request $request){
