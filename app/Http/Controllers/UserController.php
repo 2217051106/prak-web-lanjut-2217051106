@@ -26,31 +26,18 @@ class UserController extends Controller{
         $data = [ 
             'title' => 'List User',
             'users' => $users,  
+            
 
         ]; 
     
         return view('list_user', $data); 
     }
 
-    public function store(Request $request) 
-    { 
-
-        $this->userModel->create([ 
-
-            'nama' => $request->input('nama'), 
-            'npm' => $request->input('npm'), 
-            'kelas_id' => $request->input('kelas_id'), 
-        ]); 
-
-        $this->userModel->saveUser($validatedData);
-        
-        return redirect()->route('/user'); 
-    }
 
     public function create(){
-        // $kelasModel = new Kelas();
+        $kelasModel = new Kelas();
 
-        // $kelas = $kelasModel->getKelas();
+        $kelas = $kelasModel->getKelas();
 
         $kelas = $this->kelasModel->getKelas();
 
@@ -63,28 +50,44 @@ class UserController extends Controller{
         
 
     }
+
     
+    public function store(Request $request) 
+    { 
 
-    // public function store(Request $request){
+        $this->userModel->create([ 
 
-    //    $validatedData = $request->validate([
-    //     'nama' => 'required|string|max:255',
-    //     'npm' =>'required|string|max:255',
-    //     'kelas_id' => 'required|exists:kelas,id'
+            'nama' => $request->input('nama'), 
+            'npm' => $request->input('npm'), 
+            'kelas_id' => $request->input('kelas_id'), 
+        ]); 
+
+        // $this->userModel->saveUser($validatedData);
         
-    //    ]);
+        return redirect()->to('/user'); 
+    }
+    
 
-    // //    $user = UserModel::create($validatedData);
+//     public function store(Request $request){
+
+//        $validatedData = $request->validate([
+//         'nama' => 'required|string|max:255',
+//         'npm' =>'required|string|max:255',
+//         'kelas_id' => 'required|exists:kelas,id'
+        
+//        ]);
+
+//        $user = UserModel::create($validatedData);
 
 
-    //    $user->load('kelas');
+//        $user->load('kelas');
 
     
-    //     return view('profile', [
-    //         'nama' => $user->nama,
-    //         'npm' => $user->npm,
-    //         'nama_kelas' =>$user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
-    //     ]);
-    // }
+//         return view('profile', [
+//             'nama' => $user->nama,
+//             'npm' => $user->npm,
+//             'nama_kelas' =>$user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
+//         ]);
+//     }
 
 }

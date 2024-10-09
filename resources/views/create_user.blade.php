@@ -1,29 +1,54 @@
 
 @extends('layouts.app')
 
-
 @section('content')
-<div>
-    <form action="{{ route('user.store') }}" method ="POST">
-        @csrf
-        <label for="nama">Nama : </label>
-        <input type="text" id="nama" name="nama"><br>
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header text-center">
+            <h4>Input Biodata</h4>
+        </div>
+            <div class="card-body">
+                <form action="{{ route('user.store') }}" method ="POST">
+                    @csrf
+                    <div class="row mb-3">
+                        <label for="nama" class="col-sm-2 col-form-label">Nama </label>
+                        <div class="col-sm-10">
+                            <input type="text" id="nama" name="nama" class="form-control" required>
+                    </div>
+                    </div>
+                    <br>
+                    <br>
+                            
+                    <div class="row mb-3">
+                        <label for="npm" class="col-sm-2 col-form-label">NPM</label>
+                        <div class="col-sm-10">
+                            <input type="npm" id="npm" name="npm" class="form-control" required>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    
+
+                    <div class="row mb-3">
+                        <label for="kelas" class="col-sm-2 col-form-label">Kelas </label>
+                        <div class="col-sm-10">
+                            <select name="kelas_id" id="kelas_id" class="form-control" required><br>
+                            <option value="">Pilih Kelas</option>
+                                @foreach ($kelas as $kelasItem)
+                                <option value ="{{ $kelasItem->id}}">{{  $kelasItem->nama_kelas}}</option>
+                                @endforeach
+                            </select>                            
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary  btn-block mb-3">Submit</button>
+                    </div>
     
-
-        <label for="npm">NPM : </label>
-        <input type="npm" id="npm" name="npm"><br>
-
-        <label for="kelas">Kelas : </label>
-        <select name="kelas_id" id="kelas_id">
-            @foreach ($kelas as $kelasItem)
-            <option value ="{{ $kelasItem->id}}">{{  $kelasItem->nama_kelas}}</option>
-            @endforeach
-        </select>
-
-   
-        <button type="submit" class="btn btn-primary mb-3">Submit</button>
-    
-    </form>
+                </form>        
+            </div>
+    </div>
     
 </div>
 @endsection
