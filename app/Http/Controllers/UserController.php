@@ -54,17 +54,41 @@ class UserController extends Controller{
     
     public function store(Request $request) 
     { 
+       
+         // Validasi Input
+         $request->validate([
 
-        $this->userModel->create([ 
+            'nama' => 'required|string|max:255',
+            'npm' =>'required|string|max:255',
+            'kelas_id' => 'required|integer',
+            // 'foto' => 'nullable | image | mimes:jpeg, png, jpg, gif, svg|max:2028',  // Validasi untuk foto
+            'foto' => 'image|file|max:2048',
+        ]); 
 
+        // Menghandle upload foto
+        if ($request->hasFile('foto')){
+            $foto = $request->file('foto');
+            // Menyimpan file foto di folder 'uploads'
+            $foto_name =  $foto->hashName();
+            $fotoPath = $foto->move(('uploads'), $foto_name);
+          
+        } else {
+            // Jika tidak ada file yang di upload, set fotoPath menjadi null atau default
+            $fotoPath = null;
+
+        }
+        // Menyimpan data ke database termasuk path foto
+        $this->userModel->create([
             'nama' => $request->input('nama'), 
             'npm' => $request->input('npm'), 
             'kelas_id' => $request->input('kelas_id'), 
-        ]); 
+            'foto' => $fotoPath,  // Menyimpan path foto
+
+        ]);
 
         // $this->userModel->saveUser($validatedData);
         
-        return redirect()->to('/user'); 
+        return redirect()->to('/user')->with('success', 'User berhasil ditambahkan'); 
     }
     
 
