@@ -22,6 +22,10 @@ Route::get('/', function () {
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 
-Route::get('/user/create',[UserController::class, 'create']);
+Route::get('/user/create',[UserController::class, 'create'])->name('user.create');
+
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+
 Route::resource('user', UserController::class);
+
+Route::get('/user/list', [UserController::class, 'index'])->name('user.list');
