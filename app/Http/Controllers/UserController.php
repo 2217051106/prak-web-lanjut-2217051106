@@ -33,7 +33,17 @@ class UserController extends Controller{
         return view('list_user', $data); 
     }
 
+    public function profile($nama = "", $npm = "", $kelas = "")
+    {
+        $data = [
+            'nama' => $nama,
+            'npm' => $npm,
+            'kelas' => $kelas,
+        ];
+        return view('profile', $data);
 
+    }
+    
     public function create(){
         $kelasModel = new Kelas();
 
@@ -61,8 +71,7 @@ class UserController extends Controller{
             'nama' => 'required|string|max:255',
             'npm' =>'required|string|max:255',
             'kelas_id' => 'required|integer',
-            // 'foto' => 'nullable | image | mimes:jpeg, png, jpg, gif, svg|max:2028',  // Validasi untuk foto
-            'foto' => 'image|file|max:2048',
+            'foto' => 'image|file|max:2048', // validasi untuk foto
         ]); 
 
         // Menghandle upload foto
@@ -90,7 +99,51 @@ class UserController extends Controller{
         
         return redirect()->to('/user')->with('success', 'User berhasil ditambahkan'); 
     }
+    // method untuk update
+    public function edit($id){
+        $user = UserModel::findOrFail($id);
+        $kelasModel = new Kelas();
+        $kelas = $kelasModel->getKelas();
+        $title = 'Edit User';
+
+        return view('edit_user', compact('user', 'kelas', 'title'));
+    }
+
+        // Fungsi update
+    public function update(Request $request, $id){
+        $user = UserModel::findOrFail($id);
+
+        $user-> nama = $request->nama;
+        $user->npm = $request->npm;
+        $user->kelas_id = $request->kelas_id;
+
+        if ($request->hasFile('foto')){
+            $fileName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('uploads'), $fileName);
+            $user->foto = 'uploads/' . $fileName;
+        }
+        $user->save();
+
+        return redirect()->route('user.list')->with('success', 'User update successfully');
+
+    }
+
+    public function destroy($id){
+        $user = UserModel::findOrFail($id);
+        $user->delete();
+
+        return redirect()->to('/user')->with('success', 'User has been deleted successfully');
+    }
     
+    public function show($id){
+        $user = UserModel::findOrFail($id);
+        $kelas = Kelas::find($user->kelas_id);
+
+        $title = 'Detail' .$user->name;
+
+        return view('profile', compact('user', 'kelas', 'title'));
+
+    }
 
 //     public function store(Request $request){
 
