@@ -22,10 +22,16 @@ class UserModel extends Model
                     ->get(); 
     } 
 
+    public function jurusan(){
+        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+}
+
+
     protected $fillable = [
         'nama',
         'npm',
         'kelas_id',
+        'jurusan_id',
         'foto',
     ];
 }

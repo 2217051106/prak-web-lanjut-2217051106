@@ -45,6 +45,23 @@
                     </div>
                     <br>
                     <br>
+
+                    <!-- Tambahkan dropdown untuk jurusan -->
+                    <div class="row mb-3">
+                        <label for="jurusan" class="col-sm-2 col-form-label">Jurusan </label>
+                        <div class="col-sm-10">
+                            <select name="jurusan_id" id="jurusan_id" class="form-control" required>
+                                <option value="">Pilih Jurusan</option>
+                                @foreach ($jurusan as $jurusanItem)
+                                <option value="{{ $jurusanItem->id }}">{{ $jurusanItem->nama_jurusan }}</option>
+                                @endforeach
+                            </select>                            
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+                    
                     <div class="row mb-3">
                         <label for="foto" class="col-sm-2 col-form-label">Foto </label>
                         <div class="col-sm-10">
