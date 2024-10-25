@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\UserModel; 
+use App\Models\Jurusan;
+use App\Models\Fakultas;
+
 
 
 class UserController extends Controller{
@@ -22,6 +25,7 @@ class UserController extends Controller{
 }
     public function index() 
     {  $users = $this->userModel->getUser();
+        $users = $this->userModel->with('kelas','jurusan')->get(); 
 
         $data = [ 
             'title' => 'List User',
@@ -50,13 +54,18 @@ class UserController extends Controller{
         $kelas = $kelasModel->getKelas();
 
         $kelas = $this->kelasModel->getKelas();
+       
+        $kelas = Kelas::all();
+
+        $jurusan = Jurusan::with('fakultas')->get();
 
         $data =[
             'title' => 'Create User',
             'kelas' =>$kelas,
+            'jurusan' => $jurusan,
         ];
 
-        return view('create_user', $data);
+        return view('create_user', compact('jurusan', 'kelas'));
         
 
     }
@@ -71,8 +80,16 @@ class UserController extends Controller{
             'nama' => 'required|string|max:255',
             'npm' =>'required|string|max:255',
             'kelas_id' => 'required|integer',
+            'jurusan_id' => 'required|integer',
             'foto' => 'image|file|max:2048', // validasi untuk foto
         ]); 
+
+        // Menyimpan data user ke dalam tabel
+        // $user = new User();
+        // $user->nama = $validatedData['nama'];
+        // $user->npm = $validatedData['npm'];
+        // $user->kelas_id = $validatedData['kelas_id'];
+        // $user->jurusan_id = $validatedData['jurusan_id'];
 
         // Menghandle upload foto
         if ($request->hasFile('foto')){
@@ -91,6 +108,7 @@ class UserController extends Controller{
             'nama' => $request->input('nama'), 
             'npm' => $request->input('npm'), 
             'kelas_id' => $request->input('kelas_id'), 
+            'jurusan_id' => $request->input('jurusan_id'),
             'foto' => $fotoPath,  // Menyimpan path foto
 
         ]);
