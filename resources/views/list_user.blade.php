@@ -30,7 +30,9 @@
                     <td><?= $user->jurusan->nama_jurusan ?></td>
                     <td>
                         @if($user['foto'])
-                            <img src="{{ asset($user['foto']) }}" alt="User Photo" width="100" >
+                            <!-- <img src="{{ asset($user['foto']) }}" alt="User Photo" width="100" > -->
+                            <img src="{{ asset('storage/uploads/' . $user->foto) }}" alt="User Photo" width="100">
+
                         @endif
     
                     </td>
